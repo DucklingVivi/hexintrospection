@@ -8,7 +8,7 @@ architectury {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/hexdummy.accesswidener")
+    accessWidenerPath = file("src/main/resources/hexintrospection.accesswidener")
 }
 
 dependencies {
@@ -38,6 +38,7 @@ publishing {
         // Add repositories to publish to here.
     }
 }
+
 
 repositories {
     mavenCentral()

@@ -211,7 +211,7 @@ def identity(x): return x
 
 pattern_pat = re.compile(
     r'(register|registerPerWorld)\(HexPattern\.fromAngles\("([qweasd]+)",\s*HexDir\.(\w+)\),\s*"([^"]+)"?')
-pattern_stubs = [(None, "net/hexdummy/registry/HexDummyPatternRegistry.java")]
+pattern_stubs = [(None, "io/duckling/hexintrospection/registry/HexIntrospectionPatternRegistry.java")]
 
 
 def fetch_patterns(root_data):

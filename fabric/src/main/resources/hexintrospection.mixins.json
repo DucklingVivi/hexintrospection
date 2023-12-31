@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "io.duckling.hexintrospection.fabric.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "LevelStoragePostMixin",
+    "LevelStoragePreMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "hexdummy",
+  "id": "hexintrospection",
   "version": "${version}",
   "name": "Dummy Hex Casting Addon",
   "description": "Please describe me!",
@@ -16,15 +16,15 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.hexdummy.fabric.HexDummyFabric"
+      "io.duckling.hexintrospection.fabric.HexIntrospectionFabric"
     ],
     "client": [
-      "net.hexdummy.fabric.HexDummyClientFabric"
+      "io.duckling.hexintrospection.fabric.HexIntrospectionClientFabric"
     ]
   },
   "mixins": [
-    "hexdummy-common.mixins.json",
-    "hexdummy.mixins.json"
+    "hexintrospection-common.mixins.json",
+    "hexintrospection.mixins.json"
   ],
   "depends": {
     "minecraft": ">=1.19.2",

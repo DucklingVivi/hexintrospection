@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "io.duckling.hexintrospection.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "DimensionEffectsMixin",
+    "WorldRendererMixin"
+  ],
+  "mixins": [
+    "LevelPropertiesMixin",
+    "Matrix4fMixin",
+    "MinecraftServerAccess",
+    "MixinEyeFlaying",
+    "ServerChunkManagerMixin",
+    "registry.DimensionOptionsMixin",
+    "registry.ServerWorldMixin",
+    "registry.SimpleRegistryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
