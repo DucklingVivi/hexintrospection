@@ -7,10 +7,7 @@ import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import io.duckling.hexintrospection.mixin.DimensionEffectsMixin;
 import io.duckling.hexintrospection.network.Packets;
-import io.duckling.hexintrospection.registry.HexIntrospectionDimensionRegistry;
-import io.duckling.hexintrospection.registry.HexIntrospectionIotaTypeRegistry;
-import io.duckling.hexintrospection.registry.HexIntrospectionItemRegistry;
-import io.duckling.hexintrospection.registry.HexIntrospectionPatternRegistry;
+import io.duckling.hexintrospection.registry.*;
 import net.minecraft.client.gui.screen.pack.ResourcePackOrganizer;
 import net.minecraft.client.render.DimensionEffects;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -35,6 +32,8 @@ public class HexIntrospection {
     public static void init() {
         LOGGER.info("Hex Dummy says hello!");
 
+        HexIntrospectionBlockRegistry.init();
+        HexIntrospectionBlockEntityRegistry.init();
         HexIntrospectionItemRegistry.init();
         HexIntrospectionIotaTypeRegistry.init();
         HexIntrospectionPatternRegistry.init();

@@ -6,6 +6,7 @@ import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
@@ -31,7 +32,7 @@ public abstract class Matrix4fMixin implements Matrix4fExtended
 
 
     @Override
-    public void rotation(float a, float x, float y, float z) {
+    public void duckling$rotation(float a, float x, float y, float z) {
         Vec3f vector = new Vec3f(x,y,z);
         vector.normalize();
         float ux = vector.getX();
@@ -55,5 +56,25 @@ public abstract class Matrix4fMixin implements Matrix4fExtended
         a31 = 0;
         a32 = 0;
         a33 = 1;
+    }
+
+    @Override
+    public void duckling$set(Vector4f a, Vector4f b, Vector4f c, Vector4f d) {
+        a00 = a.getX();
+        a01 = a.getY();
+        a02 = a.getZ();
+        a03 = a.getW();
+        a10 = b.getX();
+        a11 = b.getY();
+        a12 = b.getZ();
+        a13 = b.getW();
+        a20 = c.getX();
+        a21 = c.getY();
+        a22 = c.getZ();
+        a23 = c.getW();
+        a30 = d.getX();
+        a31 = d.getY();
+        a32 = d.getZ();
+        a33 = d.getW();
     }
 }

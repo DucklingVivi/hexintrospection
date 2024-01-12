@@ -15,6 +15,7 @@ public class MindSphereData {
     public Map<Integer, MindSphereEyeData> eyeData = new HashMap<>();
 
 
+
     public MindSphereData(){
         MindSphereEyeData data = new MindSphereEyeData();
         data.position = new BlockPos(0,50,0);
@@ -31,7 +32,6 @@ public class MindSphereData {
             newdata.position = new BlockPos(x, 50, z);
             eyeData.put(index++, newdata);
         }
-
     }
 
     public MindSpherePacket addEyeData(MindSphereEyeData data){
@@ -61,6 +61,7 @@ public class MindSphereData {
             eyeData.put(String.valueOf(entry.getKey()), entry.getValue().toClientNBT());
         }
         compound.put("eyeData", eyeData);
+
         return compound;
     }
     public static MindSphereData fromNBT(NbtCompound compound){
@@ -72,5 +73,6 @@ public class MindSphereData {
         }
         return data;
     }
+
 
 }

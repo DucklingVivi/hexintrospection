@@ -8,6 +8,7 @@ import io.duckling.hexintrospection.HexIntrospection;
 import io.duckling.hexintrospection.casting.patterns.actions.OpEyeRaycast;
 import io.duckling.hexintrospection.casting.patterns.math.OpSignum;
 import io.duckling.hexintrospection.casting.patterns.spells.OpCongrats;
+import io.duckling.hexintrospection.casting.patterns.spells.OpCreateInfusion;
 import kotlin.Triple;
 import net.minecraft.util.Identifier;
 
@@ -21,6 +22,7 @@ public class HexIntrospectionPatternRegistry {
     public static HexPattern CONGRATS = registerPerWorld(HexPattern.fromAngles("eed", HexDir.WEST), "congrats", new OpCongrats());
     public static HexPattern SIGNUM = register(HexPattern.fromAngles("edd", HexDir.NORTH_WEST), "signum", new OpSignum());
     public static HexPattern EYEFIND = register(HexPattern.fromAngles("eaa", HexDir.NORTH_WEST), "eyefind", new OpEyeRaycast());
+    public static HexPattern CREATEINFUSION = register(HexPattern.fromAngles("eaqa",HexDir.NORTH_WEST),"createinfusion", new OpCreateInfusion());
 
 
     public static void init() {

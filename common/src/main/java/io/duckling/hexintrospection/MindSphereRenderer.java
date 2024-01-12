@@ -18,7 +18,7 @@ public class MindSphereRenderer {
 
     private static Identifier FOG_TEXTURE = new Identifier(HexIntrospection.MOD_ID,"textures/misc/fog.png");
     private static Identifier EYE_TEXTURE = new Identifier(HexIntrospection.MOD_ID,"textures/misc/eye.png");
-    public static final float EYE_TEXTURE_HEIGHT_COUNT = 28;
+    public static final float EYE_TEXTURE_HEIGHT_COUNT = 13;
     public static final float EYE_TEXTURE_WIDTH_COUNT = 3;
     public static void render(Tessellator tesselator, MatrixStack poseStack, Camera camera) {
         RenderEyes(tesselator,poseStack,camera);
@@ -40,18 +40,19 @@ public class MindSphereRenderer {
 
 
         for(MindSphereClientEyeData eyeData : MindSphereClientData.get_currentData().eyeData.values()) {
-            int index = 10;
             float u_multi = 1f / EYE_TEXTURE_WIDTH_COUNT;
             float v_multi = 1f / EYE_TEXTURE_HEIGHT_COUNT;
-            float outlinev0 = (index * v_multi);
-            float outlinev1 = ((index + 1) * v_multi);
+            float outlinev0 = (eyeData.eyeRenderInfo.eyeIndex * v_multi);
+            float outlinev1 = ((eyeData.eyeRenderInfo.eyeIndex + 1) * v_multi);
             poseStack.push();
             poseStack.translate(eyeData.position.getX() + 0.5f, eyeData.position.getY(), eyeData.position.getZ()+ 0.5f);
 
             Vector2f up = new Vector2f(0, 1);
             float angle = (float) Math.atan2(eyeData.position.getZ(), eyeData.position.getX()) - (float)Math.atan2(up.getY(), up.getX());
+            angle = angle + (float)Math.PI / 6;
             Matrix4f mat = new Matrix4f();
-            ((Matrix4fExtended) (Object) mat).rotation(angle, 0, 1, 0);
+            ((Matrix4fExtended) (Object) mat).duckling$rotation(angle, 0, 1, 0);
+            poseStack.push();
             poseStack.multiplyPositionMatrix(mat);
 
 
@@ -61,13 +62,38 @@ public class MindSphereRenderer {
             buffer.vertex(poseStack.peek().getPositionMatrix(), f12, 0, -f12).texture(u_multi, outlinev0).next();
             buffer.vertex(poseStack.peek().getPositionMatrix(), f12, 0, f12).texture(u_multi, outlinev1).next();
             buffer.vertex(poseStack.peek().getPositionMatrix(), -f12, 0, f12).texture(0, outlinev1).next();
-            poseStack.push();
-            poseStack.translate(0, 0.01, 0);
-            buffer.vertex(poseStack.peek().getPositionMatrix(), -f12, 0, -f12).texture(u_multi, 0).next();
-            buffer.vertex(poseStack.peek().getPositionMatrix(), f12, 0, -f12).texture(u_multi*2, 0).next();
-            buffer.vertex(poseStack.peek().getPositionMatrix(), f12, 0, f12).texture(u_multi*2, v_multi).next();
-            buffer.vertex(poseStack.peek().getPositionMatrix(), -f12, 0, f12).texture(u_multi, v_multi).next();
+            if(eyeData.eyeRenderInfo.showIris){
+                float irisv0 = (eyeData.eyeRenderInfo.irisIndex * v_multi);
+                float irisv1 = ((eyeData.eyeRenderInfo.irisIndex + 1) * v_multi);
+                poseStack.push();
+                poseStack.translate(0, -0.02, 0);
+                buffer.vertex(poseStack.peek().getPositionMatrix(), -f12, 0, -f12).texture(u_multi, irisv0).next();
+                buffer.vertex(poseStack.peek().getPositionMatrix(), f12, 0, -f12).texture(u_multi*2, irisv0).next();
+                buffer.vertex(poseStack.peek().getPositionMatrix(), f12, 0, f12).texture(u_multi*2, irisv1).next();
+                buffer.vertex(poseStack.peek().getPositionMatrix(), -f12, 0, f12).texture(u_multi, irisv1).next();
+                poseStack.pop();
+            }
             poseStack.pop();
+            if(eyeData.eyeRenderInfo.showPupil){
+
+                float f13 = 10f;
+
+                Vec3d vector3 = new Vec3d(camera.getPos().x,0, camera.getPos().z);
+                vector3 = vector3.subtract(eyeData.position.getX(),0, eyeData.position.getZ());
+                double distance = vector3.length();
+                vector3 = vector3.normalize();
+                vector3 = vector3.multiply(1.2f);
+                vector3 = vector3.multiply( Math.min(eyeData.eyeRenderInfo.pupilBound,distance/10f));
+                poseStack.push();
+                poseStack.translate(vector3.x,-0.01,vector3.z);
+                buffer.vertex(poseStack.peek().getPositionMatrix(), -f13, 0, -f13).texture(u_multi*2, 0).next();
+                buffer.vertex(poseStack.peek().getPositionMatrix(), f13, 0, -f13).texture(u_multi*3, 0).next();
+                buffer.vertex(poseStack.peek().getPositionMatrix(), f13, 0, f13).texture(u_multi*3, v_multi).next();
+                buffer.vertex(poseStack.peek().getPositionMatrix(), -f13, 0, f13).texture(u_multi*2, v_multi).next();
+                poseStack.pop();
+            }
+
+
             poseStack.pop();
         }
 
@@ -119,7 +145,7 @@ public class MindSphereRenderer {
         tesselator.draw();
         poseStack.pop();
 
-
+        RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
         RenderSystem.enableCull();
     }
@@ -127,7 +153,7 @@ public class MindSphereRenderer {
         poseStack.push();
 
         Matrix4f rotationmatrix = new Matrix4f();
-        ((Matrix4fExtended)(Object)rotationmatrix).rotation(-angle, 0, 1, 0);
+        ((Matrix4fExtended)(Object)rotationmatrix).duckling$rotation(-angle, 0, 1, 0);
         poseStack.translate(position.getX(),position.getY(),position.getZ());
         poseStack.multiplyPositionMatrix(rotationmatrix);
 
